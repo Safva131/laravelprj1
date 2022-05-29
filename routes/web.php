@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\SampleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,3 +89,7 @@ Route::view('mailexample','mail');
 Route::post('sendmail',[TestController::class,'fnSendMail']);
 
 Route::view('payment','pay');
+
+//////////
+Route::view('techersreg','teachersregistration');
+/////////
