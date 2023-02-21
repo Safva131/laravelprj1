@@ -8,6 +8,8 @@ use App\Exceptions\InvalidOrderException;
 use App\Models\Customer;
 use App\Models\EmployeeCategory;
 use App\Models\Employee;
+use App\Models\Category;
+use App\Models\Product;
 use App\Mail\SendMail;
 
 
@@ -356,4 +358,67 @@ class TestController extends Controller
     function fnGetList(){
         return EmployeeCategory::all(); 
     }
+
+    //////foreign keys
+    function fnAddProductCategories(Request $request){
+        $categoryname = $request->category_name;
+        $category_desc = $request->category_desc;
+        $categoryObj = new Category([
+            'category_name'=>$categoryname,
+            'category_description'=>$category_desc
+        ]);
+        $categorysave = $categoryObj->save();
+        if($categorysave){
+            return view('add_category',['message'=>'data inserted successfully']);
+        }
+        else{
+            return view('add_category',['message'=>'error in inserting data']);
+        }
+    }
+
+    function fnGetCategories(Request $request){
+        $categories = Category::all();
+        // print_r($categories);
+        return Response::json(array('success'=>true,'categories'=>$categories));
+    }
+
+    function fnAddProducts(Request $request){
+        $validatedata  = $request->validate([
+            'product_name'=>'required|min:5',
+            'product_price'=>'required',
+        ],[
+            'product_name.required'=>'product name is required',
+            'product_name.min'=>'product name contains atleast 4 characters',
+            'product_price.required'=>'product price is required'
+        ]);
+        $pname = $request->product_name;
+        $pcategory = $request->product_category;
+        $price = $request->product_price;
+        $date = $request->product_added_date;
+        $productObj = new Product([
+            'product_name'=>$pname,
+            'fk_category_id'=>$pcategory,
+            'product_price'=>$price,
+            'added_date'=>$date
+        ]);
+        $productsave = $productObj->save();
+        if($productsave){
+            return view('add_products_category',['message'=>'data inserted successfully']);
+        }
+        else{
+            return view('add_products_category',['message'=>'error']);
+        }
+    }
+
+    function fnGetProducts(Request $request){
+        $products = Product::select('products.product_name','categories.category_name','products.product_price','products.added_date')
+        ->join('categories','categories.id','=','products.fk_category_id')->get();
+        return view('display_products',['product_details'=>$products]);
+    }
+
+
 }
+
+
+
+

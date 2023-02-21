@@ -21,11 +21,9 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        //$('#btn_save').click(function(){
             function addEmpcategory(){
             var categoryName = $('#empCategory').val();
-            var description = $('#empCategoryDesc').val();
-            
+            var description = $('#empCategoryDesc').val();  
            
                 $.ajax({
                     url:"empcategory",
@@ -34,7 +32,7 @@
                         "category":categoryName,
                         "desc":description
                     },
-                    dataType:"json",
+                    // dataType:"json",
                     success:function(response){
                         document.getElementById('err_msg').innerHTML = response.result;
                     }

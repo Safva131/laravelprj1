@@ -37,7 +37,7 @@ Route::get('AddProduct',function(){
 
 Route::view('Sum','sum') -> middleware('ckuser');
 Route::post('Sum',[TestController::class,'TestFunction']);
-
+    
 Route::view('Home','home');
 Route::view('Profile','profile');
 
@@ -93,3 +93,11 @@ Route::view('payment','pay');
 //////////
 Route::view('techersreg','teachersregistration');
 /////////
+
+
+Route::view('add_categories/','add_category');
+Route::post('add_categories/',[TestController::class,'fnAddProductCategories']);
+Route::view('add_product','add_products_category');
+Route::get('getprodcategories',[TestController::class,'fnGetCategories']);
+Route::post('add_product',[TestController::class,'fnAddProducts']);
+Route::get('get_product_details',[TestController::class,'fnGetProducts']);

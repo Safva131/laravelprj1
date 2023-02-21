@@ -18,6 +18,8 @@ use App\Http\Controllers\TestController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
 Route::get('employeecategory',[TestController::class,'fnDisplayCategory']);
 Route::post('addcategory',[TestController::class,'fnAddCategory']);
 Route::get('getcustomerss',[TestController::class,'fnAPIGetCustomers']);
